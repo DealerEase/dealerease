@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { supabase } from "../lib/supabaseClient";
 import Header from "../components/Header";
 import Image from "next/image";
 
 export default function AuthPage() {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (router.query.signup === "true") {
+      setIsLogin(false);
+    }
+  }, [router.query.signup]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +30,28 @@ export default function AuthPage() {
       if (error) return setMessage(error.message);
       setMessage("Successfully logged in!");
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) return setMessage(error.message);
+
+      // Add additional user info to "profiles" table
+      const userId = data.user?.id;
+      if (userId) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: userId,
+            email,
+            first_name: firstName,
+            last_name: lastName,
+            company,
+            phone,
+          },
+        ]);
+        if (profileError) {
+          console.error(profileError);
+          return setMessage("Signup succeeded, but profile creation failed.");
+        }
+      }
+
       setMessage("Check your email to confirm signup.");
     }
   };
@@ -29,7 +61,6 @@ export default function AuthPage() {
       <Header />
 
       <div className="flex flex-col items-center justify-center px-6 py-12">
-        {/* Logo */}
         <div className="flex justify-center mb-6">
           <Image src="/logo.svg" alt="DealerEase Logo" width={60} height={60} />
         </div>
@@ -39,6 +70,43 @@ export default function AuthPage() {
         </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-md">
+          {!isLogin && (
+            <>
+              <input
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                className="px-4 py-2 rounded-lg text-black"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+                className="px-4 py-2 rounded-lg text-black"
+              />
+              <input
+                type="text"
+                placeholder="Company Name"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                required
+                className="px-4 py-2 rounded-lg text-black"
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="px-4 py-2 rounded-lg text-black"
+              />
+            </>
+          )}
+
           <input
             type="email"
             placeholder="Email"
@@ -68,29 +136,20 @@ export default function AuthPage() {
         <p className="mt-6 text-center text-sm text-gray-400">
           {isLogin ? (
             <>
-              Don’t have an account?{' '}
+              Don’t have an account?{" "}
               <span className="text-blue-400 cursor-pointer" onClick={() => setIsLogin(false)}>
                 Sign up
               </span>
             </>
           ) : (
             <>
-              Already have an account?{' '}
+              Already have an account?{" "}
               <span className="text-blue-400 cursor-pointer" onClick={() => setIsLogin(true)}>
                 Log in
               </span>
             </>
           )}
         </p>
-
-        <div className="mt-8">
-          <a
-            href="/auth"
-            className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-200 transition"
-          >
-            Get Started
-          </a>
-        </div>
       </div>
     </main>
   );

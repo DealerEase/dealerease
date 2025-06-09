@@ -14,7 +14,7 @@ export default function HomePage() {
         <p className="text-lg text-gray-400 mb-8">
           Powerful solutions to manage your dealership operations with ease.
         </p>
-        <Link href="/auth">
+        <Link href="/auth?signup=true">
           <button className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-200 transition">
             Get Started
           </button>
