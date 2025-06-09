@@ -14,10 +14,8 @@ export default function HomePage() {
           Powerful solutions to manage your dealership operations with ease.
         </p>
         <Link href="/auth">
-          <button className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-200 transition">
-            Get Started
-          </button>
-        </Link>
+  <button>Get Started</button>
+</Link>
     </section><section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
         <div className="bg-neutral-900 p-6 rounded-2xl text-center">
           <h2 className="text-xl font-semibold mb-2 text-white">Features</h2>
