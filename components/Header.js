@@ -11,12 +11,14 @@ export default function Header() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex items-center space-x-6 text-lg text-gray-300">
-          <Link href="/"><span className="hover:text-white cursor-pointer">Home</span></Link>
-          <Link href="/features"><span className="hover:text-white cursor-pointer">Features</span></Link>
-          <Link href="#"><span className="hover:text-white cursor-pointer">About</span></Link>
-          <Link href="#"><span className="hover:text-white cursor-pointer">Contact</span></Link>
-        </nav>
+      <nav className="hidden md:flex items-center space-x-6 text-lg text-gray-300">
+  <Link href="/"><span className="hover:text-white cursor-pointer">Home</span></Link>
+  <Link href="/features"><span className="hover:text-white cursor-pointer">Features</span></Link>
+  <Link href="#"><span className="hover:text-white cursor-pointer">About</span></Link>
+  <Link href="#"><span className="hover:text-white cursor-pointer">Contact</span></Link>
+  <Link href="/auth"><span className="hover:text-white cursor-pointer">Log In</span></Link>
+</nav>
+
       </div>
     </header>
   );

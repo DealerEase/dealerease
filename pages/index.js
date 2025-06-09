@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black text-white font-sans px-6 py-10 flex flex-col items-center">
+    <><main className="min-h-screen bg-black text-white font-sans px-6 py-10 flex flex-col items-center">
       <Header />
 
       <section className="text-center mb-20">
@@ -13,12 +13,13 @@ export default function HomePage() {
         <p className="text-lg text-gray-400 mb-8">
           Powerful solutions to manage your dealership operations with ease.
         </p>
-        <button className="bg-white text-black px-6 py-3 rounded-xl shadow hover:bg-gray-200 transition">
-          Get Started
-        </button>
-      </section>
-
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+        <Link href="/auth">
+          <button className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-200 transition">
+            Get Started
+          </button>
+        </Link>
+      </button>
+    </section><section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
         <div className="bg-neutral-900 p-6 rounded-2xl text-center">
           <h2 className="text-xl font-semibold mb-2 text-white">Features</h2>
           <p className="text-gray-400">
@@ -31,7 +32,7 @@ export default function HomePage() {
             See how our solutions have transformed dealerships
           </p>
         </div>
-      </section>
+      </section></>
     </main>
   );
 }
