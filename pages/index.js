@@ -18,7 +18,6 @@ export default function HomePage() {
             Get Started
           </button>
         </Link>
-      </button>
     </section><section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
         <div className="bg-neutral-900 p-6 rounded-2xl text-center">
           <h2 className="text-xl font-semibold mb-2 text-white">Features</h2>
