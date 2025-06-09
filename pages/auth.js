@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import Header from "../components/Header";
 import Image from "next/image";
 
 export default function AuthPage() {
@@ -24,8 +25,10 @@ export default function AuthPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black text-white px-6">
-      <div className="w-full max-w-md bg-neutral-900 rounded-2xl p-8 shadow-xl">
+    <main className="min-h-screen bg-black text-white font-sans">
+      <Header />
+
+      <div className="flex flex-col items-center justify-center px-6 py-12">
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <Image src="/logo.svg" alt="DealerEase Logo" width={60} height={60} />
@@ -35,7 +38,7 @@ export default function AuthPage() {
           {isLogin ? "Log In" : "Sign Up"}
         </h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-md">
           <input
             type="email"
             placeholder="Email"
@@ -54,7 +57,7 @@ export default function AuthPage() {
           />
           <button
             type="submit"
-            className="bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-200 transition"
+            className="bg-white text-black font-semibold py-2 rounded-full hover:bg-gray-200 transition"
           >
             {isLogin ? "Log In" : "Sign Up"}
           </button>
@@ -65,20 +68,29 @@ export default function AuthPage() {
         <p className="mt-6 text-center text-sm text-gray-400">
           {isLogin ? (
             <>
-              Don’t have an account?{" "}
+              Don’t have an account?{' '}
               <span className="text-blue-400 cursor-pointer" onClick={() => setIsLogin(false)}>
                 Sign up
               </span>
             </>
           ) : (
             <>
-              Already have an account?{" "}
+              Already have an account?{' '}
               <span className="text-blue-400 cursor-pointer" onClick={() => setIsLogin(true)}>
                 Log in
               </span>
             </>
           )}
         </p>
+
+        <div className="mt-8">
+          <a
+            href="/auth"
+            className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-200 transition"
+          >
+            Get Started
+          </a>
+        </div>
       </div>
     </main>
   );
