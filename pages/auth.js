@@ -40,14 +40,15 @@ const handleSubmit = async (e) => {
           email,
           first_name: firstName,
           last_name: lastName,
-          company_name: company,
-          phone_number: phone,
+           company,
+           phone,
         },
       ]);
 
       if (profileError) {
         console.error("Profile Insert Error:", profileError);
-        return setMessage("Signup succeeded, but profile creation failed.");
+        return setMessage(`Signup succeeded, but profile creation failed: ${profileError.message}`);
+  }
       }
     }
 
