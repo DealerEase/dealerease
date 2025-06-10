@@ -33,7 +33,7 @@ export default function AuthPage() {
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) return setMessage(error.message);
 
-      const userId = data.user?.id;
+      const userId = data.session?.user?.id || data.user?.id;
       if (userId) {
         const { error: profileError } = await supabase.from("profiles").insert([
           {
