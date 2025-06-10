@@ -20,42 +20,41 @@ export default function AuthPage() {
       setIsLogin(false);
     }
   }, [router.query.signup]);
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage("");
 
-  if (isLogin) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return setMessage(error.message);
-    setMessage("Successfully logged in!");
-  } else {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return setMessage(error.message);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
 
-    const userId = data.user?.id;
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").insert([
-        {
-          id: userId,
-          email,
-          first_name: firstName,
-          last_name: lastName,
-           company,
-           phone,
-        },
-      ]);
+    if (isLogin) {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) return setMessage(error.message);
+      setMessage("Successfully logged in!");
+    } else {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) return setMessage(error.message);
 
-      if (profileError) {
-        console.error("Profile Insert Error:", profileError);
-        return setMessage(`Signup succeeded, but profile creation failed: ${profileError.message}`);
-  }
+      const userId = data.user?.id;
+      if (userId) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: userId,
+            email,
+            first_name: firstName,
+            last_name: lastName,
+            company,
+            phone,
+          },
+        ]);
+
+        if (profileError) {
+          console.error("Profile Insert Error:", profileError);
+          return setMessage(`Signup succeeded, but profile creation failed: ${profileError.message}`);
+        }
       }
+
+      setMessage("Check your email to confirm signup.");
     }
-
-    setMessage("Check your email to confirm signup.");
-  }
-};
-
+  };
 
   return (
     <main className="min-h-screen bg-black text-white font-sans">
