@@ -35,7 +35,9 @@ export default function AuthPage() {
 
       const userId = data.session?.user?.id || data.user?.id;
       if (userId) {
-        const { error: profileError } = await supabase.from("profiles").insert([
+        const { error: profileError } = await supabase
+        .from("profiles")
+        .insert([
           {
             id: userId,
             email,
