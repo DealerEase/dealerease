@@ -33,13 +33,11 @@ export default function AuthPage() {
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) return setMessage(error.message);
 
-      const userId = data.session?.user?.id || data.user?.id;
-      if (userId) {
-        const { error: profileError } = await supabase
-        .from("profiles")
-        .insert([
+      const user = data.user;
+      if (user) {
+        const { error: profileError } = await supabase.from("profiles").insert([
           {
-            id: userId,
+            id: user.id,
             email,
             first_name: firstName,
             last_name: lastName,
@@ -49,13 +47,12 @@ export default function AuthPage() {
         ]);
 
         if (profileError) {
-          console.log("userId being inserted:", userId);
           console.error("Profile Insert Error:", profileError);
           return setMessage(`Signup succeeded, but profile creation failed: ${profileError.message}`);
         }
-      }
 
-      setMessage("Check your email to confirm signup.");
+        setMessage("Signup complete. Please check your email to confirm your account.");
+      }
     }
   };
 
