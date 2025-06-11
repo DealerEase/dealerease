@@ -47,6 +47,7 @@ export default function AuthPage() {
         ]);
 
         if (profileError) {
+          console.log("userId being inserted:", userId);
           console.error("Profile Insert Error:", profileError);
           return setMessage(`Signup succeeded, but profile creation failed: ${profileError.message}`);
         }
